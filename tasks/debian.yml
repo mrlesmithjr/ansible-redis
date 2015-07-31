@@ -1,4 +1,9 @@
 ---
+- name: debian | installing pre-requisites
+  apt: name={{ item }} state=present
+  with_items:
+    - python-pip
+
 - name: debian | installing redis-server
   apt: name=redis-server state=present
 
