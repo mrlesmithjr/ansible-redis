@@ -5,3 +5,8 @@
 
 - name: centos | enable redis service on boot
   service: name=redis enabled=yes
+
+- name: centos | configuring redis-server to listen on all interfaces
+  replace: dest=/etc/redis/redis.conf regexp='^bind 127.0.0.1' replace='#bind 127.0.0.1'
+  notify: restart redis-server
+  when: redis_allow_remote_connections is defined and redis_allow_remote_connections
