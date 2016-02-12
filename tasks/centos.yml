@@ -1,16 +1,29 @@
 ---
 - name: centos | installing redis
-  yum: name=redis state=installed
+  yum:
+    name: redis
+    state: installed
   notify: start redis
 
 - name: centos | enable redis service on boot
-  service: name=redis enabled=yes
+  service:
+    name: redis
+    enabled: yes
 
 - name: centos | configuring redis-server to listen on all interfaces
-  replace: dest=/etc/redis.conf regexp='^bind 127.0.0.1' replace='#bind 127.0.0.1'
+  replace:
+    dest: "/etc/redis.conf"
+    regexp: "^bind 127.0.0.1"
+    replace: "#bind 127.0.0.1"
   notify: restart redis
-  when: redis_allow_remote_connections is defined and redis_allow_remote_connections
+  when: >
+        redis_allow_remote_connections is defined and
+        redis_allow_remote_connections
 
 - name: centos | tweaking redis memory
-  sysctl: name="vm.overcommit_memory" value=1 state=present reload=yes
+  sysctl:
+    name: "vm.overcommit_memory"
+    value: 1
+    state: present
+    reload: yes
   notify: restart redis
