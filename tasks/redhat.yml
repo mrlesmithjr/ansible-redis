@@ -10,21 +10,38 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - 'dnf'
     - 'python-devel'
-    - 'python-dnf'
     - 'python-pip'
+  when: ansible_distribution != "Fedora"
+
+- name: redhat | installing dependencies
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'python-devel'
+    - 'python-pip'
+  when: ansible_distribution == "Fedora"
+
+- name: redhat | installing redis
+  yum:
+    name: "redis"
+    state: present
+  notify:
+    - start redis
   when: ansible_distribution != "Fedora"
 
 - name: redhat | installing redis
   dnf:
-    name: redis
+    name: "redis"
     state: present
-  notify: start redis
+  notify:
+    - start redis
+  when: ansible_distribution == "Fedora"
 
 - name: redhat | enable redis service on boot
   service:
-    name: redis
+    name: "redis"
     enabled: yes
 
 - name: redhat | configuring redis-server to listen on all interfaces
