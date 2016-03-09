@@ -39,9 +39,10 @@
     - start redis
   when: ansible_distribution == "Fedora"
 
-- name: redhat | enable redis service on boot
+- name: redhat | ensuring redis is enabled and started
   service:
     name: "redis"
+    state: started
     enabled: yes
 
 - name: redhat | configuring redis-server to listen on all interfaces

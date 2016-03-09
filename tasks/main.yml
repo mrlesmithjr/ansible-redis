@@ -5,3 +5,6 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- include: opensuse.yml
+  when: ansible_os_family == "openSUSE Leap"
