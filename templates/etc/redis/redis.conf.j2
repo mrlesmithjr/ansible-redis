@@ -14,13 +14,13 @@ logfile {{ redis_log_file }}
 {% if redis_syslog_logging %}
 syslog-enabled yes
 {% endif %}
-databases 16
+databases {{ redis_databases }}
 
 ################################ SNAPSHOTTING  ################################
 
-save 900 1
-save 300 10
-save 60 10000
+{% for item in redis_save_to_disk %}
+save {{ item.seconds }} {{ item.changes }}
+{% endfor %}
 stop-writes-on-bgsave-error yes
 rdbcompression yes
 rdbchecksum yes
@@ -30,7 +30,7 @@ dir {{ redis_working_directory }}
 ################################# REPLICATION #################################
 
 {% if redis_replication %}
-{%   if inventory_hostname != redis_replication_master %}
+{%   if redis_replication_master_address is defined and inventory_hostname != redis_replication_master %}
 slaveof {{ redis_replication_master_address }} {{ redis_port }}
 {%   endif %}
 {% endif %}
@@ -47,9 +47,11 @@ slave-priority 100
 ################################### LIMITS ####################################
 
 maxclients {{ redis_max_clients }}
-# maxmemory <bytes>
-# maxmemory-policy noeviction
-# maxmemory-samples 5
+{% if redis_maxmemory_config %}
+maxmemory {{ redis_maxmemory }}
+maxmemory-policy {{ redis_maxmemory_policy }}
+maxmemory-samples {{ redis_maxmemory_samples }}
+{% endif %}
 
 ############################## APPEND ONLY MODE ###############################
 
