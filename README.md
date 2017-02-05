@@ -56,7 +56,7 @@ redis_max_clients: '10000'
 # or use the below calculated value
 redis_maxmemory: '{{ (ansible_memtotal_mb | int * redis_maxmemory_size_multiplier) | round | int }}mb'
 # Defines if maxmemory settings are applied
-redis_maxmemory_config: true
+redis_maxmemory_config: false
 # volatile-lru|allkeys-lru|volatile-random|allkeys-random|volatile-ttl|noeviction
 redis_maxmemory_policy: 'noeviction'
 redis_maxmemory_samples: '5'
