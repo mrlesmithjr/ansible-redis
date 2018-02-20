@@ -111,4 +111,4 @@ redis_user_info:
   name: redis
 
 # Defines the Redis version to install when installing from source
-redis_version: 3.2.7
+redis_version: 4.0.8
