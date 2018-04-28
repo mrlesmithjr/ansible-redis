@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TAR_FILE="v1.1.tar.gz"
+TAR_FILE="v1.2.tar.gz"
 
 # Prompt for Ansible role name
 read -p "Enter the Ansible role name: " input
