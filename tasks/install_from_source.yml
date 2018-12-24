@@ -81,7 +81,7 @@
 - name: install_from_source | Configuring Redis Service (systemd)
   template:
     src: etc/systemd/system/redis.service.j2
-    dest: "{{ '/etc/systemd/system/' + redis_service '.service' }}"
+    dest: "{{ '/etc/systemd/system/' + redis_service + '.service' }}"
   register: redis_systemd_service_configured
   become: true
   when: ansible_service_mgr == "systemd"
