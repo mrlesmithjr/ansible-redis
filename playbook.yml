@@ -1,8 +1,5 @@
 ---
-- hosts: all
-  sudo: true
-  vars:
-    - redis_allow_remote_connections: true
+- name: Example Playbook
+  hosts: all
   roles:
     - role: ansible-redis
-  tasks:
