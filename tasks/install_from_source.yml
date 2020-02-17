@@ -1,12 +1,26 @@
 ---
 - name: install_from_source | Installing Pre-Reqs
   apt:
-    name: ["build-essential"]
+    name:
+      - build-essential
     state: present
   become: true
   register: result
   until: result is successful
   when: ansible_os_family == "Debian"
+
+- name: install_from_source | Installing Pre-Reqs
+  yum:
+    name:
+      - gcc
+      - gcc-c++
+      - kernel-devel
+      - make
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when: ansible_os_family == "RedHat"
 
 - name: install_from_source | Downloading Redis {{ redis_version }} Source
   get_url:

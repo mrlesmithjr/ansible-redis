@@ -10,7 +10,10 @@
 
 - name: redhat | installing dependencies
   yum:
-    name: ["python-devel", "python-pip", "ruby"]
+    name:
+      - python-devel
+      - python-pip
+      - ruby
     state: present
   become: true
   register: result
@@ -19,7 +22,11 @@
 
 - name: redhat | installing dependencies
   dnf:
-    name: ["libselinux-python", "python-devel", "python-pip", "ruby"]
+    name:
+      # - libselinux-python
+      - python-devel
+      - python-pip
+      - ruby
     state: present
   become: true
   register: result
@@ -35,9 +42,9 @@
   become: true
   register: result
   until: result is successful
-  when: >
-    ansible_distribution != "Fedora" and
-    not redis_install_from_source
+  when:
+    - ansible_distribution != "Fedora"
+    - not redis_install_from_source
 
 - name: redhat | installing redis
   dnf:
@@ -48,6 +55,6 @@
   become: true
   register: result
   until: result is successful
-  when: >
-    ansible_distribution == "Fedora" and
-    not redis_install_from_source
+  when:
+    - ansible_distribution == "Fedora"
+    - not redis_install_from_source
