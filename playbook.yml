@@ -1,5 +1,7 @@
 ---
 - name: Example Playbook
   hosts: all
-  roles:
-    - role: ansible-redis
+  tasks:
+    - name: Include ansible-redis
+      include_role:
+        name: ansible-redis
