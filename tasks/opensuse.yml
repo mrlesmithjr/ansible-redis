@@ -1,7 +1,7 @@
 ---
 - name: opensuse | installing dependencies
   zypper:
-    name: ["python-devel", "python-pip"]
+    name: []
     state: present
   become: true
   register: result

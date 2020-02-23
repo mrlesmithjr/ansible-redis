@@ -100,7 +100,7 @@
   become: true
   when: ansible_service_mgr == "systemd"
 
-- name: install_from_source | Reloading Systemctl
+- name: install_from_source | Reloading Systemctl # noqa 503
   systemd:
     daemon_reload: true
     name: redis
@@ -127,7 +127,7 @@
   become: true
   when: not redis_log['stat']['exists']
 
-- name: install_from_source | Capturing Environment Path
+- name: install_from_source | Capturing Environment Path # noqa 306
   shell: 'grep PATH /etc/environment | sed ''s|"||g'' | sed ''s|PATH=||g'''
   register: env_path
   changed_when: false
