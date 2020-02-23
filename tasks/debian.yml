@@ -1,7 +1,9 @@
 ---
 - name: debian | Installing Pre-Reqs
   apt:
-    name: ["python-pip", "ruby", "rubygems-integration"]
+    name:
+      - ruby
+      - rubygems-integration
     state: present
   become: true
   register: result
