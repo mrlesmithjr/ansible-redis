@@ -1,0 +1,16 @@
+{{ ansible_managed|comment }}
+
+bind {{ redis_bind_addresses|join (' ') }}
+daemonize {{ "yes" if redis_daemonize|bool else "no" }}
+logfile {{ redis_sentinel_log_file }}
+pidfile {{ redis_sentinel_pid_file }}
+port {{ redis_sentinel_port }}
+protected-mode no
+sentinel monitor redis-primary {{ redis_replication_master_address }} {{ redis_port }} 2
+sentinel down-after-milliseconds redis-primary 5000
+sentinel myid 35e971378af98bc8cce2d61ee288b0b50d75e6a9
+# dir /tmp
+# sentinel parallel-syncs mymaster 1
+# sentinel failover-timeout mymaster 180000
+# sentinel deny-scripts-reconfig yes
+

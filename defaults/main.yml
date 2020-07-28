@@ -37,7 +37,7 @@ redis_databases: 16
 # Redis download info for source based installs
 redis_dl_info:
   dest_dir: /usr/local/src
-  file: "{{ 'redis-' + redis_version + '.tar.gz' }}"
+  file: "{{ 'redis-'+redis_version|string+'.tar.gz' }}"
   url: http://download.redis.io/releases
 
 # Defines the directory in which Redis is installed to from source
@@ -66,7 +66,7 @@ redis_maxmemory_samples: 5
 redis_maxmemory_size_multiplier: 0.5
 
 # Define Redis listen port
-redis_port: "6379"
+redis_port: 6379
 
 # Enable replication (true|false)
 redis_replication: false
@@ -92,6 +92,9 @@ redis_save_to_disk:
   - seconds: 60
     changes: 10000
 
+# Define Redis Setinel listen port
+redis_sentinel_port: 26379
+
 # System tweaks specific to Redis performance
 redis_sysctl_settings:
   []
@@ -113,4 +116,4 @@ redis_user_info:
   name: redis
 
 # Defines the Redis version to install when installing from source
-redis_version: "4.0.8"
+redis_version: 6.0.6

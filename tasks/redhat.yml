@@ -30,7 +30,7 @@
   until: result is successful
   when:
     - ansible_distribution != "Fedora"
-    - not redis_install_from_source
+    - not redis_install_from_source|bool
 
 - name: redhat | installing redis
   dnf:
@@ -43,4 +43,4 @@
   until: result is successful
   when:
     - ansible_distribution == "Fedora"
-    - not redis_install_from_source
+    - not redis_install_from_source|bool

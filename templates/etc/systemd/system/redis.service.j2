@@ -4,9 +4,9 @@ After=network.target
 Documentation=http://redis.io/documentation, man:redis-server(1)
 
 [Service]
-{% if redis_daemonize %}
+{% if redis_daemonize|bool %}
 Type=forking
-{% elif not redis_daemonize %}
+{% elif not redis_daemonize|bool %}
 Type=simple
 {% endif %}
 ExecStart={{ redis_bin_path }}/redis-server {{ redis_conf }}

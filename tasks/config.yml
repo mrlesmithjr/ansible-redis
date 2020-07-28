@@ -4,7 +4,40 @@
     src: etc/redis/redis.conf.j2
     dest: "{{ redis_conf }}"
   become: true
-  notify: "restart {{ redis_service }}"
+  notify:
+    - "restart {{ redis_service }}"
+
+- name: config | Configuring Redis Sentinel
+  template:
+    src: etc/redis/sentinel.conf.j2
+    dest: "{{ redis_sentinel_conf }}"
+    owner: "{{ redis_user_info['name'] }}"
+    group: "{{ redis_user_info['name'] }}"
+  become: true
+  register: _redis_sentinel_conf
+  notify:
+    - restart sentinel
+  when: redis_replication|bool
+
+- name: config | Configuring Redis Sentinel Service
+  template:
+    src: etc/systemd/system/sentinel.service.j2
+    dest: /etc/systemd/system/sentinel.service
+  become: true
+  register: _redis_sentinel_service
+  notify:
+    - restart sentinel
+  when: redis_replication|bool
+
+- name: config | Reloading Systemd
+  systemd:
+    daemon_reload: true
+    name: sentinel
+    enabled: true
+  become: true
+  when:
+    - redis_replication|bool
+    - _redis_sentinel_service is changed
 
 - name: config | Configuring Sysctl Settings
   sysctl:
@@ -14,5 +47,5 @@
     reload: yes
   become: true
   notify: "restart {{ redis_service }}"
-  with_items: "{{ redis_sysctl_settings }}"
+  loop: "{{ redis_sysctl_settings }}"
   when: redis_sysctl_settings != []

@@ -16,4 +16,4 @@
   become: true
   register: result
   until: result is successful
-  when: not redis_install_from_source
+  when: not redis_install_from_source|bool

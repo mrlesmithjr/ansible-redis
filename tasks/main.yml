@@ -21,6 +21,6 @@
 - include: pip.yml
 
 - include: config.yml
-  when: redis_config_redis
+  when: redis_config_redis|bool
 
 - include: service.yml

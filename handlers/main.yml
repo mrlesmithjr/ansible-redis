@@ -12,6 +12,12 @@
     state: restarted
   become: true
 
+- name: restart sentinel
+  service:
+    name: sentinel
+    state: restarted
+  become: true
+
 - name: start redis
   service:
     name: redis

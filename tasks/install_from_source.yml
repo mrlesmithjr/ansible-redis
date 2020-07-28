@@ -31,7 +31,7 @@
 - name: install_from_source | Extracting Redis {{ redis_version }}
   unarchive:
     copy: no
-    creates: "{{ redis_dl_info['dest_dir'] + '/redis-' + redis_version + '/Makefile' }}"
+    creates: "{{ redis_dl_info['dest_dir'] + '/redis-'+redis_version|string+'/Makefile' }}"
     dest: "{{ redis_dl_info.dest_dir + '/' }}"
     src: "{{ redis_dl_info['dest_dir'] + '/' + redis_dl_info['file'] }}"
   become: true
@@ -60,14 +60,14 @@
 
 - name: install_from_source | Checking If Redis Has Already Been Compiled
   stat:
-    path: "{{ redis_dl_info['dest_dir'] + '/redis-' + redis_version + '/src/redis-server' }}"
+    path: "{{ redis_dl_info['dest_dir'] + '/redis-'+redis_version|string+'/src/redis-server' }}"
   register: redis_compiled
 
 - name: install_from_source | Compiling Redis
   make:
-    chdir: "{{ redis_dl_info['dest_dir'] + '/redis-' + redis_version }}"
+    chdir: "{{ redis_dl_info['dest_dir'] + '/redis-'+redis_version|string }}"
   become: true
-  when: not redis_compiled['stat']['exists']
+  when: not redis_compiled['stat']['exists']|bool
 
 - name: install_from_source | Checking If Redis Has Already Been Installed
   stat:
@@ -77,12 +77,12 @@
 
 - name: install_from_source | Installing Redis
   make:
-    chdir: "{{ redis_dl_info['dest_dir'] + '/redis-' + redis_version }}"
+    chdir: "{{ redis_dl_info['dest_dir'] + '/redis-'+redis_version|string }}"
     params:
       PREFIX: "{{ redis_install_dir }}"
     target: install
   become: true
-  when: not redis_installed['stat']['exists']
+  when: not redis_installed['stat']['exists']|bool
 
 - name: install_from_source | Configuring Redis Service (initd)
   template:
@@ -125,7 +125,21 @@
     group: "{{ redis_user_info['name'] }}"
     state: touch
   become: true
-  when: not redis_log['stat']['exists']
+  when: not redis_log['stat']['exists']|bool
+
+- name: install_from_source | Checking If {{ redis_sentinel_log_file }} Exists
+  stat:
+    path: "{{ redis_sentinel_log_file }}"
+  register: _redis_sentinel_log
+
+- name: install_from_source | Creating {{ redis_sentinel_log_file }}
+  file:
+    path: "{{ redis_sentinel_log_file }}"
+    owner: "{{ redis_user_info['name'] }}"
+    group: "{{ redis_user_info['name'] }}"
+    state: touch
+  become: true
+  when: not _redis_sentinel_log['stat']['exists']|bool
 
 - name: install_from_source | Capturing Environment Path # noqa 306
   shell: 'grep PATH /etc/environment | sed ''s|"||g'' | sed ''s|PATH=||g'''

@@ -4,7 +4,10 @@
     redis_bin_path: "{{ redis_install_dir + '/bin' }}"
     redis_conf: /etc/redis/redis.conf
     redis_log_file: /var/log/redis/redis-server.log
-    redis_pid_file: "{{ '/var/run/redis/' + redis_port + '.pid' }}"
+    redis_pid_file: /var/run/redis/redis-server.pid
+    redis_sentinel_conf: /etc/redis/sentinel.conf
+    redis_sentinel_log_file: /var/log/redis/sentinel.log
+    redis_sentinel_pid_file: /var/run/redis/redis-sentinel.pid
     redis_service: redis-server
     redis_working_directory: "{{ redis_install_dir }}"
   when: ansible_os_family == "Debian"
@@ -19,7 +22,10 @@
     redis_bin_path: "{{ redis_install_dir + '/bin' }}"
     redis_conf: /etc/redis.conf
     redis_log_file: /var/log/redis/redis.log
-    redis_pid_file: "{{ '/var/run/redis/' + redis_port + '.pid' }}"
+    redis_pid_file: /var/run/redis/redis-server.pid
+    redis_sentinel_conf: /etc/redis/sentinel.conf
+    redis_sentinel_log_file: /var/log/redis/sentinel.log
+    redis_sentinel_pid_file: /var/run/redis/redis-sentinel.pid
     redis_service: redis
     redis_working_directory: "{{ redis_install_dir }}"
   when: ansible_os_family == "RedHat"
@@ -30,21 +36,21 @@
 - name: set_facts | Setting Replication Master
   set_fact:
     redis_replication_master: "{{ groups[redis_replication_ansible_group][0] }}"
-  when: >
-    redis_replication
+  when:
+    - redis_replication|bool
 
 - name: set_facts | Setting Master Replication Address
   set_fact:
     redis_replication_master_address: "{{ redis_replication_address }}"
-  when: >
-    redis_replication and
-    (redis_replication_master is defined and
-    inventory_hostname == redis_replication_master)
+  when:
+    - redis_replication|bool
+    - redis_replication_master is defined
+    - inventory_hostname == redis_replication_master
 
 - name: set_facts | Setting Master Replication Address On Slaves
   set_fact:
     redis_replication_master_address: "{{ hostvars[redis_replication_master]['redis_replication_master_address'] }}"
-  when: >
-    redis_replication and
-    redis_replication_master is defined and
-    inventory_hostname != redis_replication_master
+  when:
+    - redis_replication|bool
+    - redis_replication_master is defined
+    - inventory_hostname != redis_replication_master

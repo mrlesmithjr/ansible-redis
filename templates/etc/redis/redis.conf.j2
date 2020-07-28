@@ -1,14 +1,17 @@
-daemonize {{ "yes" if redis_daemonize else "no" }}
+{{ ansible_managed|comment }}
+
+bind {{ redis_bind_addresses|join (' ') }}
+daemonize {{ "yes" if redis_daemonize|bool else "no" }}
+databases {{ redis_databases }}
+logfile {{ redis_log_file }}
+loglevel notice
 pidfile {{ redis_pid_file }}
 port {{ redis_port }}
-tcp-backlog {{ redis_tcp_backlog }}
-bind {{ redis_bind_addresses|join (' ') }}
-timeout 0
-tcp-keepalive 0
-loglevel notice
-logfile {{ redis_log_file }}
+protected-mode no
 syslog-enabled {{ "yes" if redis_syslog_logging else "no" }}
-databases {{ redis_databases }}
+tcp-backlog {{ redis_tcp_backlog }}
+tcp-keepalive 0
+timeout 0
 
 ################################ SNAPSHOTTING  ################################
 
@@ -23,7 +26,7 @@ dir {{ redis_working_directory }}
 
 ################################# REPLICATION #################################
 
-{% if redis_replication %}
+{% if redis_replication|bool %}
 {%   if redis_replication_master_address is defined and inventory_hostname != redis_replication_master %}
 slaveof {{ redis_replication_master_address }} {{ redis_port }}
 {%   endif %}
@@ -62,7 +65,7 @@ aof-load-truncated yes
 lua-time-limit 5000
 
 ################################ REDIS CLUSTER  ###############################
-cluster-enabled {{ "yes" if redis_cluster else "no" }}
+cluster-enabled {{ "yes" if redis_cluster|bool else "no" }}
 # cluster-node-timeout 15000
 # cluster-slave-validity-factor 10
 # cluster-migration-barrier 1

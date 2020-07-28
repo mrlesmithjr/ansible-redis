@@ -1,0 +1,15 @@
+[Unit]
+Description=Sentinel for Redis
+After=network.target
+
+[Service]
+Type=forking
+User={{ redis_user_info.name }}
+Group={{ redis_user_info.name }}
+PIDFile={{ redis_sentinel_pid_file }}
+ExecStart={{ redis_bin_path }}/redis-server {{ redis_sentinel_conf }} --sentinel
+ExecStop=/bin/kill -s TERM $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

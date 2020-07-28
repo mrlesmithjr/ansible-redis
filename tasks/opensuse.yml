@@ -16,4 +16,4 @@
   until: result is successful
   notify:
     - start redis
-  when: not redis_install_from_source
+  when: not redis_install_from_source|bool
