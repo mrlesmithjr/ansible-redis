@@ -12,7 +12,7 @@ tcp-keepalive 300
 ################################# GENERAL #####################################
 
 daemonize yes
-supervised no
+supervised auto
 pidfile {{ redis_pid_file }}
 loglevel notice
 logfile {{ redis_log_file }}
