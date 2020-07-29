@@ -8,7 +8,7 @@
     src: etc/redis/redis.conf.j2
   become: true
   notify:
-    - restart redis
+    - restart {{ redis_service }}
 
 - name: config | Configuring Sysctl Settings
   sysctl:
@@ -18,6 +18,6 @@
     reload: true
   become: true
   notify:
-    - restart redis
+    - restart {{ redis_service }}
   loop: "{{ redis_sysctl_settings }}"
   when: redis_sysctl_settings != []
