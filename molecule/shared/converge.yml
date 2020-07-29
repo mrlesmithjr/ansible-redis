@@ -1,8 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    redis_config_redis: true
   tasks:
     - name: Include ansible-redis
       include_role:
