@@ -3,7 +3,13 @@
 ################################## NETWORK #####################################
 
 bind {{ redis_bind_addresses|join (' ') }}
+{% if ansible_os_family == "RedHat" %}
 protected-mode yes
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+protected-mode yes
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+protected-mode yes
+{% endif %}
 port {{ redis_port }}
 tcp-backlog {{ redis_tcp_backlog }}
 timeout 0
@@ -12,7 +18,13 @@ tcp-keepalive 300
 ################################# GENERAL #####################################
 
 daemonize yes
+{% if ansible_os_family == "RedHat" %}
 supervised auto
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+supervised auto
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+supervised auto
+{% endif %}
 pidfile {{ redis_pid_file }}
 loglevel notice
 logfile {{ redis_log_file }}
@@ -92,8 +104,16 @@ notify-keyspace-events ""
 
 list-max-ziplist-entries 512
 list-max-ziplist-value 64
+{% if ansible_os_family == "RedHat" %}
 list-max-ziplist-size -2
 list-compress-depth 0
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+list-max-ziplist-size -2
+list-compress-depth 0
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+list-max-ziplist-size -2
+list-compress-depth 0
+{% endif %}
 set-max-intset-entries 512
 zset-max-ziplist-entries 128
 zset-max-ziplist-value 64
