@@ -1,46 +1,17 @@
 ---
-- name: redhat | installing dependencies
-  yum:
+- name: redhat | Installing Pre-Reqs
+  package:
     name:
       - ruby
     state: present
   become: true
   register: result
   until: result is successful
-  when: ansible_distribution != "Fedora"
 
-- name: redhat | installing dependencies
-  dnf:
-    name:
-      - ruby
-    state: present
-  become: true
-  register: result
-  until: result is successful
-  when: ansible_distribution == "Fedora"
-
-- name: redhat | installing redis
-  yum:
+- name: redhat | Installing Redis
+  package:
     name: redis
     state: present
-  notify:
-    - start redis
   become: true
   register: result
   until: result is successful
-  when:
-    - ansible_distribution != "Fedora"
-    - not redis_install_from_source|bool
-
-- name: redhat | installing redis
-  dnf:
-    name: redis
-    state: present
-  notify:
-    - start redis
-  become: true
-  register: result
-  until: result is successful
-  when:
-    - ansible_distribution == "Fedora"
-    - not redis_install_from_source|bool

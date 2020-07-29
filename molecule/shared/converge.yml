@@ -3,7 +3,6 @@
   hosts: all
   vars:
     redis_config_redis: true
-    redis_install_from_source: true
   tasks:
     - name: Include ansible-redis
       include_role:

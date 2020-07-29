@@ -1,51 +1,23 @@
 ---
 - name: config | Configuring Redis
   template:
-    src: etc/redis/redis.conf.j2
     dest: "{{ redis_conf }}"
+    group: "{{ redis_user_info.group }}"
+    mode: u=rw,g=r,o=
+    owner: "{{ redis_user_info.name }}"
+    src: etc/redis/redis.conf.j2
   become: true
   notify:
-    - "restart {{ redis_service }}"
-
-- name: config | Configuring Redis Sentinel
-  template:
-    src: etc/redis/sentinel.conf.j2
-    dest: "{{ redis_sentinel_conf }}"
-    owner: "{{ redis_user_info['name'] }}"
-    group: "{{ redis_user_info['name'] }}"
-  become: true
-  register: _redis_sentinel_conf
-  notify:
-    - restart sentinel
-  when: redis_replication|bool
-
-- name: config | Configuring Redis Sentinel Service
-  template:
-    src: etc/systemd/system/sentinel.service.j2
-    dest: /etc/systemd/system/sentinel.service
-  become: true
-  register: _redis_sentinel_service
-  notify:
-    - restart sentinel
-  when: redis_replication|bool
-
-- name: config | Reloading Systemd
-  systemd:
-    daemon_reload: true
-    name: sentinel
-    enabled: true
-  become: true
-  when:
-    - redis_replication|bool
-    - _redis_sentinel_service is changed
+    - restart redis
 
 - name: config | Configuring Sysctl Settings
   sysctl:
-    name: "{{ item['name'] }}"
-    value: "{{ item['value'] }}"
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
     state: present
-    reload: yes
+    reload: true
   become: true
-  notify: "restart {{ redis_service }}"
+  notify:
+    - restart redis
   loop: "{{ redis_sysctl_settings }}"
   when: redis_sysctl_settings != []

@@ -6,20 +6,8 @@
     state: restarted
   become: true
 
-- name: restart redis-server
-  service:
-    name: redis-server
-    state: restarted
-  become: true
-
 - name: restart sentinel
   service:
     name: sentinel
     state: restarted
-  become: true
-
-- name: start redis
-  service:
-    name: redis
-    state: started
   become: true
