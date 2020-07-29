@@ -1,13 +1,33 @@
-daemonize {{ "yes" if redis_daemonize else "no" }}
-pidfile {{ redis_pid_file }}
+{{ ansible_managed|comment }}
+
+################################## NETWORK #####################################
+
+bind {{ redis_bind_addresses|join (' ') }}
+{% if ansible_os_family == "RedHat" %}
+protected-mode yes
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+protected-mode yes
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+protected-mode yes
+{% endif %}
 port {{ redis_port }}
 tcp-backlog {{ redis_tcp_backlog }}
-bind {{ redis_bind_addresses|join (' ') }}
 timeout 0
-tcp-keepalive 0
+tcp-keepalive 300
+
+################################# GENERAL #####################################
+
+daemonize yes
+{% if ansible_os_family == "RedHat" %}
+supervised auto
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+supervised auto
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+supervised auto
+{% endif %}
+pidfile {{ redis_pid_file }}
 loglevel notice
 logfile {{ redis_log_file }}
-syslog-enabled {{ "yes" if redis_syslog_logging else "no" }}
 databases {{ redis_databases }}
 
 ################################ SNAPSHOTTING  ################################
@@ -23,25 +43,35 @@ dir {{ redis_working_directory }}
 
 ################################# REPLICATION #################################
 
-{% if redis_replication %}
+{% if redis_replication|bool %}
 {%   if redis_replication_master_address is defined and inventory_hostname != redis_replication_master %}
 slaveof {{ redis_replication_master_address }} {{ redis_port }}
 {%   endif %}
 {% endif %}
 slave-serve-stale-data yes
 slave-read-only yes
+{% if ansible_os_family == "RedHat" %}
 repl-diskless-sync no
 repl-diskless-sync-delay 5
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('16.04','>=') %}
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+{% endif %}
 repl-disable-tcp-nodelay no
 slave-priority 100
 
 ################################## SECURITY ###################################
 
-
-################################### LIMITS ####################################
+################################### CLIENTS ####################################
 
 maxclients {{ redis_max_clients }}
-{% if redis_maxmemory_config %}
+
+############################## MEMORY MANAGEMENT ################################
+
+{% if redis_maxmemory_config|bool %}
 maxmemory {{ redis_maxmemory }}
 maxmemory-policy {{ redis_maxmemory_policy }}
 maxmemory-samples {{ redis_maxmemory_samples }}
@@ -62,11 +92,14 @@ aof-load-truncated yes
 lua-time-limit 5000
 
 ################################ REDIS CLUSTER  ###############################
-cluster-enabled {{ "yes" if redis_cluster else "no" }}
-# cluster-node-timeout 15000
-# cluster-slave-validity-factor 10
-# cluster-migration-barrier 1
-# cluster-require-full-coverage yes
+
+{% if ansible_os_family == "RedHat" %}
+cluster-enabled no
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('16.04','>=') %}
+cluster-enabled no
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+cluster-enabled no
+{% endif %}
 
 ################################## SLOW LOG ###################################
 
@@ -83,10 +116,18 @@ notify-keyspace-events ""
 
 ############################### ADVANCED CONFIG ###############################
 
-hash-max-ziplist-entries 512
-hash-max-ziplist-value 64
 list-max-ziplist-entries 512
 list-max-ziplist-value 64
+{% if ansible_os_family == "RedHat" %}
+list-max-ziplist-size -2
+list-compress-depth 0
+{% elif ansible_distribution == "Ubuntu" and ansible_distribution_version is version('18.04','>=') %}
+list-max-ziplist-size -2
+list-compress-depth 0
+{% elif ansible_distribution == "Debian" and ansible_distribution_version is version('9','>=') %}
+list-max-ziplist-size -2
+list-compress-depth 0
+{% endif %}
 set-max-intset-entries 512
 zset-max-ziplist-entries 128
 zset-max-ziplist-value 64

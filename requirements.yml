@@ -1,2 +1,3 @@
 ---
-- src: https://github.com/mrlesmithjr/ansible-bootstrap-python.git
+roles:
+  - name: mrlesmithjr.ansible_bootstrap_python

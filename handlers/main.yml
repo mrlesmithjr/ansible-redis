@@ -12,8 +12,8 @@
     state: restarted
   become: true
 
-- name: start redis
+- name: restart sentinel
   service:
-    name: redis
-    state: started
+    name: sentinel
+    state: restarted
   become: true

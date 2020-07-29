@@ -16,4 +16,13 @@
   become: true
   register: result
   until: result is successful
-  when: not redis_install_from_source
+
+- name: debian | Installing Redis Sentinel
+  apt:
+    name: redis-sentinel
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when:
+    - redis_replication|bool

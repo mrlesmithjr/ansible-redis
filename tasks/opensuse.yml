@@ -1,12 +1,4 @@
 ---
-- name: opensuse | installing dependencies
-  zypper:
-    name: []
-    state: present
-  become: true
-  register: result
-  until: result is successful
-
 - name: opensuse | installing redis
   zypper:
     name: redis
@@ -14,6 +6,3 @@
   become: true
   register: result
   until: result is successful
-  notify:
-    - start redis
-  when: not redis_install_from_source

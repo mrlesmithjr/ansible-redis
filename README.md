@@ -2,6 +2,7 @@
 
 Ansible role to install/configure Redis
 
+
 ## Build Status
 
 ### GitHub Actions
@@ -11,6 +12,8 @@ Ansible role to install/configure Redis
 ### Travis CI
 
 [![Build Status](https://travis-ci.org/mrlesmithjr/ansible-redis.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-redis)
+
+
 
 ## Requirements
 

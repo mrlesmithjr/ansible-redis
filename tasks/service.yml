@@ -1,7 +1,17 @@
 ---
-- name: service | ensuring redis is enabled and started
+- name: service | Ensuring Redis Service is Enabled and Started
   service:
     name: "{{ redis_service }}"
     state: started
     enabled: true
   become: true
+
+- name: service | Ensuring Redis Sentinel Service is Enabled and Started
+  service:
+    name: redis-sentinel
+    state: started
+    enabled: true
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - redis_replication|bool
