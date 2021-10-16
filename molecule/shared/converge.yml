@@ -6,6 +6,6 @@
       - 0.0.0.0
     redis_config_redis: true
   tasks:
-    - name: Include ansible-redis
+    - name: Include mrlesmithjr.redis
       include_role:
-        name: ansible-redis
+        name: mrlesmithjr.redis
