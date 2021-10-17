@@ -9,7 +9,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Tue Jul 28 20:13:20 2020 -0400
 
     Refactored tasks to simplify role
-    
+
     This needed to be done to simplify and add functionality going forward.
     This role now initially supports replication and sentinel.
 
@@ -18,7 +18,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Tue Jul 28 20:11:48 2020 -0400
 
     Deleted install from source, etc.
-    
+
     This role needs to be simplified before adding more functionality going forward
 
 commit c96c4e7cd5f9f4eda348bbd37561815800687e75
@@ -26,7 +26,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Tue Jul 28 16:52:40 2020 -0400
 
     Initial commit with changes from template and sentinel
-    
+
     This is going to be changing as I refactor
 
 commit 5e70c071887fd888659248274d2ae448a3c14f64
@@ -34,7 +34,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Feb 22 19:22:37 2020 -0500
 
     Fixing Python issues
-    
+
     - Testing with ansible-bootstrap-python role
 
 commit d50cce5d397fce64eda7a58d05ac5e209ad9721f
@@ -108,7 +108,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sun Dec 23 20:58:21 2018 -0500
 
     First commit of refactoring
-    
+
     Cleaned up code based on Ansible lint and YAML lint
     Implemented updated Travis CI testing
 
@@ -195,7 +195,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sun Apr 23 12:33:23 2017 -0400
 
     Added become to tasks where required
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 9886830a90278eff724f1abe9f96c4d9a2995751
@@ -203,7 +203,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sun Apr 23 11:47:50 2017 -0400
 
     Fixed setting up replication definitions
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit a9fb95045a4cd021349b7cee5bb003b7b3f1af11
@@ -211,7 +211,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Feb 4 22:26:00 2017 -0500
 
     Disabled maxmemory config for default
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 7a0af65689e7c3c7fd1f8f6fc6e55b5021504a02
@@ -219,7 +219,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Feb 4 22:21:16 2017 -0500
 
     Added additional configuration options and re-organized the vars
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 29e894fc681d29fb08f60a8874c1cf3425096861
@@ -227,7 +227,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Feb 4 18:17:24 2017 -0500
 
     Added Travis tests
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 93160f892cb377f40bde820ed6eed4020531bf84
@@ -235,7 +235,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Feb 4 18:13:52 2017 -0500
 
     Complete rewrite
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 950077b3d7d3016ee52cb75760251612f81873d7
@@ -243,7 +243,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Tue Jun 7 11:46:01 2016 -0400
 
     Cleaned up, split out tweaks, Updated REPO Info, Updated Docker build
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 5c64e8a9d5c74ec80298cdde037fa784f99bf235
@@ -251,7 +251,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 23:21:44 2016 -0500
 
     Added openSUSE support
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit 83c8b6a99365b89d2fc255b1ee8018d030e4a0ef
@@ -259,7 +259,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 07:36:54 2016 -0500
 
     Fixed Docker build
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit cf89cbd5b718b66b6f8cb1eb0752978c2fc9197c
@@ -267,7 +267,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 00:57:55 2016 -0500
 
     Added CentOS-6 support
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit fc01c2cdcd982f00a040cc71f334fffbb98f21fb
@@ -275,7 +275,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 00:55:56 2016 -0500
 
     Updated Docker build
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit 699e315b71e665f4c2084e4a3f94f4b549911bb2
@@ -283,7 +283,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 00:52:33 2016 -0500
 
     Added CentOS, Fedora and Debian support
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit 504b30a35e060e1a8a1e48b9a82f5c8fb686659f
@@ -291,7 +291,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Tue Mar 8 00:52:14 2016 -0500
 
     Updated redhat tasks
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit 493745e1c402aa47340f1651cef07fec9d23d11f
@@ -299,7 +299,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Fri Mar 4 23:48:28 2016 -0500
 
     Fixed RedHat install
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit 22905f40a2f67ae82a0c89d7f27e6fbdbc0b46e8
@@ -307,7 +307,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.coml>
 Date:   Thu Feb 11 20:24:27 2016 -0500
 
     Cleaned up formatting
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.coml>
 
 commit bd4375841a2bbc750974b9313f7292aae3fc42f0
@@ -315,7 +315,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Jan 2 13:41:10 2016 -0500
 
     updated Docker build
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit bad6c9357888326139bb29bd43017228ec2731ea
@@ -323,7 +323,7 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Sat Jan 2 01:53:59 2016 -0500
 
     Updated Docker Image to use
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit a74a4e44778ed97200215b991679cc0531c138b3
@@ -331,9 +331,9 @@ Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Mon Dec 21 13:40:25 2015 -0500
 
     Added Dockerfile
-    
+
     Setting up Docker Hub Automated Builds
-    
+
     Signed-off-by: Larry Smith Jr <mrlesmithjr@gmail.com>
 
 commit 22fbceb2a7181fd391a522584138506927cd70eb

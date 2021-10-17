@@ -1,3 +1,4 @@
 ---
+collections: []
 roles:
   - name: mrlesmithjr.ansible_bootstrap_python
