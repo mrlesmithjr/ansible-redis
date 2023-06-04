@@ -1,6 +1,6 @@
 ---
 - name: config | Configuring Redis
-  template:
+  ansible.builtin.template:
     dest: "{{ redis_conf }}"
     group: "{{ redis_user_info.group }}"
     mode: u=rw,g=r,o=
@@ -11,7 +11,7 @@
     - restart {{ redis_service }}
 
 - name: config | Configuring Sysctl Settings
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present

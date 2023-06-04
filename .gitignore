@@ -23,3 +23,7 @@ venv/
 # Ignore all local history of files
 .history
 .ionide
+
+.vscode/
+
+.DS_Store

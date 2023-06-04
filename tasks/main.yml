@@ -1,17 +1,23 @@
 ---
 # tasks file for ansible-redis
-- include: set_facts.yml
+- name: Set facts
+  ansible.builtin.include_tasks: set_facts.yml
 
-- include: debian.yml
+- name: Debian specific tasks
+  ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == "Debian"
 
-- include: redhat.yml
+- name: RHEL specific tasks
+  ansible.builtin.include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- include: opensuse.yml
+- name: OpenSUSE specific tasks
+  ansible.builtin.include_tasks: opensuse.yml
   when: ansible_os_family == "Suse"
 
-- include: config.yml
+- name: Configure Redis
+  ansible.builtin.include_tasks: config.yml
   when: redis_config_redis|bool
 
-- include: service.yml
+- name: Manage Redis Services
+  ansible.builtin.include_tasks: service.yml

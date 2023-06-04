@@ -1,4 +1,6 @@
 ---
-collections: []
+collections:
+  - name: community.docker
+    version: "*" # Need to ensure that the latest version is installed or Molecule fails
 roles:
   - name: mrlesmithjr.ansible_bootstrap_python

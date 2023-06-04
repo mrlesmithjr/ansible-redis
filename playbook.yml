@@ -3,5 +3,5 @@
   hosts: all
   tasks:
     - name: Include mrlesmithjr.redis
-      include_role:
+      ansible.builtin.include_role:
         name: mrlesmithjr.redis

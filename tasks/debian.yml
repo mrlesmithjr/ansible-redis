@@ -1,6 +1,6 @@
 ---
 - name: debian | Installing Pre-Reqs
-  apt:
+  ansible.builtin.apt:
     name:
       - ruby
       - rubygems-integration
@@ -10,7 +10,7 @@
   until: result is successful
 
 - name: debian | Installing Redis
-  apt:
+  ansible.builtin.apt:
     name: redis-server
     state: present
   become: true
@@ -18,7 +18,7 @@
   until: result is successful
 
 - name: debian | Installing Redis Sentinel
-  apt:
+  ansible.builtin.apt:
     name: redis-sentinel
     state: present
   become: true
