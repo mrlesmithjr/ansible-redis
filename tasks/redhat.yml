@@ -1,6 +1,6 @@
 ---
 - name: redhat | Installing Pre-Reqs
-  package:
+  ansible.builtin.package:
     name:
       - ruby
     state: present
@@ -9,7 +9,7 @@
   until: result is successful
 
 - name: redhat | Installing Redis
-  package:
+  ansible.builtin.package:
     name: redis
     state: present
   become: true
